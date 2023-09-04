@@ -533,38 +533,6 @@
       humidityChartShin.data.datasets[0].data = [];
       humidityChartShin.update();
     }
-
-    let heaterStatus_1 = false;
-
-    function startHeater_1() {
-      if (heaterStatus_1) {
-        console.log("Heater is already started.");
-        return;
-      }
-      
-      var minute_1 = parseFloat(document.getElementById('timerInput_1').value);
-      
-      if (!isNaN(minute_1) && minute_1 >= 0) {
-        fetch('/start-heater_1', { method: 'POST' })
-          .then(response => response.text())
-          .then(message => {
-            console.log(message);
-            heaterStatus_1 = true;
-          });
-      } else {
-        alert('Please enter a valid timer value greater than 0.');
-      }
-    }
-
-    function stopHeater_1() {
-      fetch('/stop-heater_1', { method: 'POST' })
-        .then(response => response.text())
-        .then(message => {
-          console.log(message);
-          heaterStatus_1 = false;
-          resetGraphs();
-        });
-    }
   </script>
 </body>
 </html>

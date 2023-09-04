@@ -99,8 +99,8 @@ void loop() {
   // อัพเดตสถานะของเว็บเซิร์ฟเวอร์
   server.handleClient();
   
-  // อัพเดตค่าจาก DHT เซ็นเซอร์และส่งข้อมูลไปยัง Anto
-  updateDHTDataAndSendToAnto();
+  // อัพเดตค่าจาก อุณหภูมิ, ความชื้น, Heater, Setpoint, Minute, Second  และส่งข้อมูลไปยัง Anto
+  updateDataAndSendToAnto();
   
   //ใช้ฟังก์ชัน `loop()` ของ Anto MQTT ในการรับข้อมูลจาก Anto
   anto.mqtt.loop();
@@ -120,6 +120,11 @@ void setupWiFiandAnto() {
   anto.begin(ssid, password, messageReceived);
 
   Serial.println("Connected to Anto");
+  
+  // ตั้งค่าการรับข้อมูลจาก Anto
+  anto.sub("start_heater_1");
+  anto.sub("start_heater_2");
+  anto.sub("start_heater_3");
 }
 
 // ฟังก์ชันในการรับข้อมูลที่ถูกส่งมาจาก Anto MQTT
@@ -130,10 +135,32 @@ void messageReceived(String thing, String channel, String payload) {
   Serial.print(channel);
   Serial.print("-> ");
   Serial.println(payload);
+
+  // ตรวจสอบช่องที่รับค่า
+  if (channel == "start_heater_1") {
+    if (payload == "1") {
+      heaterStatus[0] = true;
+    } else {
+      heaterStatus[0] = false;
+    }
+  } else if (channel == "start_heater_2") {
+    if (payload == "1") {
+      heaterStatus[1] = true;
+    } else {
+      heaterStatus[1] = false;
+    }
+  } else if (channel == "start_heater_3") {
+    if (payload == "1") {
+      heaterStatus[2] = true;
+    } else {
+      heaterStatus[2] = false;
+    }
+  }
 }
 
-// ฟังก์ชันอัพเดตค่าจาก DHT เซ็นเซอร์และส่งข้อมูลไปยัง Anto
-void updateDHTDataAndSendToAnto() {
+
+// ฟังก์ชันอัพเดตค่าจาก อุณหภูมิ, ความชื้น, Heater, Setpoint, Minute, Second  และส่งข้อมูลไปยัง Anto
+void updateDataAndSendToAnto() {
   // อ่านค่าอุณหภูมิและความชื้นจากเซ็นเซอร์ DHT11
   float temp_in[3];
   float humid_in[3];
@@ -158,7 +185,9 @@ void updateDHTDataAndSendToAnto() {
   anto.pub("humidity_in_2", humid_in[1]);
   anto.pub("humidity_in_3", humid_in[2]);
   
-  anto.pub("temp_out", temp_out);
+  anto.pub("temp_out_1", temp_out);
+  anto.pub("temp_out_2", temp_out);
+  anto.pub("temp_out_3", temp_out);
   
   // ส่งค่าเปอร์เซ็นต์ของเครื่องทำความร้อนไปยัง Anto MQTT
   anto.pub("heater_1", heater[0]);
