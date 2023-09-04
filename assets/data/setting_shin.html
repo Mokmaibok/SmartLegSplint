@@ -182,17 +182,6 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/chart.min.js"></script>
   <script>
-    function updateData() {
-      fetch('/data')
-        .then(response => response.json())
-        .then(data => {
-          updatetemperatureChartShin(data);
-          updatetemperatureInOutChartShin(data);
-          updatehumidityChartShin(data);
-        });
-    }
-    setInterval(updateData, 5000);
-    
     function updateSetpointValue(setpoint_1) {
       document.getElementById('setpointInput_1').value = setpoint_1.toFixed(2);
     }
@@ -210,7 +199,7 @@
     function updateSetpoint(setpoint_1) {
       var formData = new FormData();
       formData.append('setpoint_1', setpoint_1);
-      fetch('/setpoint_1', {
+      fetch(apiUrl + "setpoint_1", {
         method: 'POST',
         body: formData
       })
