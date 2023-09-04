@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Leg Splint</title>
+  <!-- Add viewport meta tag for responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include Bootstrap 5 CSS -->
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <!-- Navbar Brand -->
+      <a class="navbar-brand" href="index.html">Smart Leg Splint</a>
+
+      <!-- Navbar Toggler (for mobile menu) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar Menu Items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Setting</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="setting_shin.html">Shin Position</a></li>
+              <li><a class="dropdown-item" href="setting_sole.html">Sole Position</a></li>
+              <li><a class="dropdown-item" href="setting_instep.html">Instep Position</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container" style="margin: auto; margin-top: 50px;">
+    <div class="row">
+      <!-- First Card -->
+      <div class="col-md-4">
+        <div class="card mb-3 text-center">
+          <div class="card-body">
+            <h3 class="card-title">Shin Position</h3>
+            <p class="card-text">Inner Temperature: <span id="temp_in_1">-</span> °C</p>
+            <p class="card-text">Outer Temperature: <span id="temp_out_1">-</span> °C</p>
+            <p class="card-text">Inner Humidity: <span id="humidity_in_1">-</span> %</p>
+            <p class="card-text">Heater Output: <span id="heater_1">-</span> %</p>
+            <p class="card-text">Countdown Timer: <span id="minute_1">-</span> Minute <span id="second_1">-</span> Second</p>
+            <a href="setting_shin.html" class="btn btn-primary">Go to Setting</a>
+          </div>
+          <div class="card-footer">Status: <span id="heaterStatus_1">-</span></div>
+        </div>
+      </div>
+      <!-- Second Card -->
+      <div class="col-md-4">
+        <div class="card mb-3  text-center">
+          <div class="card-body">
+            <h3 class="card-title">Sole Position</h3>
+            <p class="card-text">Inner Temperature: <span id="temp_in_2">-</span> °C</p>
+            <p class="card-text">Outer Temperature: <span id="temp_out_2">-</span> °C</p>
+            <p class="card-text">Inner Humidity: <span id="humidity_in_2">-</span> %</p>
+            <p class="card-text">Heater Output: <span id="heater_2">-</span> %</p>
+            <p class="card-text">Countdown Timer: <span id="minute_2">-</span> Minute <span id="second_2">-</span> Second</p>
+            <a href="setting_sole.html" class="btn btn-primary">Go to Setting</a>
+          </div>
+          <div class="card-footer">Status: <span id="heaterStatus_2">-</span></div>
+        </div>
+      </div>
+      <!-- Third Card -->
+      <div class="col-md-4">
+        <div class="card mb-3  text-center">
+          <div class="card-body">
+            <h3 class="card-title">Instep Position</h3>
+            <p class="card-text">Inner Temperature: <span id="temp_in_3">-</span> °C</p>
+            <p class="card-text">Outer Temperature: <span id="temp_out_3">-</span> °C</p>
+            <p class="card-text">Inner Humidity: <span id="humidity_in_3">-</span> %</p>
+            <p class="card-text">Heater Output: <span id="heater_3">-</span> %</p>
+            <p class="card-text">Countdown Timer: <span id="minute_3">-</span> Minute <span id="second_3">-</span> Second</p>
+            <a href="setting_instep.html" class="btn btn-primary">Go to Setting</a>
+          </div>
+          <div class="card-footer">Status: <span id="heaterStatus_3">-</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="./js/main.js"></script>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

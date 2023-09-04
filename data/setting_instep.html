@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Leg Splint</title>
+  <!-- Add viewport meta tag for responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include Bootstrap 5 CSS -->
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <!-- Navbar Brand -->
+      <a class="navbar-brand" href="index.html">Smart Leg Splint</a>
+      <!-- Navbar Toggler (for mobile menu) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Navbar Menu Items -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <!-- Dropdown for setting menu -->
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Setting</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="setting_shin.html">Shin Position</a></li>
+              <li><a class="dropdown-item" href="setting_sole.html">Sole Position</a></li>
+              <li><a class="dropdown-item" href="setting_instep.html">Instep Position</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container" style="margin: auto;">
+    <h1 class="mt-3">Instep Position</h1>
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Setpoint Form Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Setpoint</h5>
+            <form id="setpointForm">
+              <div class="form-group">
+                <p class="card-text">Current Setpoint: <span id="Setpoint_3">-</span> °C</p>
+                <input type="number" step="0.1" class="form-control" id="setpointInput_3" placeholder="Enter Setpoint">
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Update Setpoint</button>
+            </form>
+          </div>
+        </div>
+        <!-- Setpoint Timer Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Set Timer</h5>
+            <form id="timerForm">
+              <div class="form-group">
+                <p class="card-text">Current Timer: <span id="Timer_3">-</span> Minute</p>
+                <input type="number" step="0.1" class="form-control" id="timerInput_3" placeholder="Enter Minute">
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Set Timer</button>
+            </form>
+          </div>
+        </div>
+        <!-- Heater Control Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Heater Control</h5>
+            <p>Status: <span id="heaterStatus_3">-</span></p>
+            <div class="row">
+              <button type="button" class="btn btn-success" style="width: 50%;" onclick="startHeater_3()">Start</button>
+              <button type="button" class="btn btn-danger" style="width: 50%;" onclick="stopHeater_3()">Stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Temperature In Card -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Inner Temperature</h5>
+                <p class="card-text">Current Temperature: <span id="temp_in_3">-</span> °C</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <!-- Temperature Out Card -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Outer Temperature</h5>
+                <p class="card-text">Current Temperature: <span id="temp_out_3">-</span> °C</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Humidity Card -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Inner Humidity</h5>
+                <p class="card-text">Current Humidity: <span id="humidity_in_3">-</span> %</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <!-- Heater Output Card -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Heater Output</h5>
+                <p class="card-text">Current Heater Output: <span id="heater_3">-</span> %</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Countdown Timer Card -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Countdown Timer</h5>
+                <p>Time Remaining: <span id="minute_3">-</span> Minute <span id="second_3">-</span> Second</p>
+                <!-- Timer Modal -->
+                <div class="modal fade" id="timerModal" tabindex="-1" aria-labelledby="timerModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="timerModalLabel">Timer Expired</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        The timer has expired. Heater has been stopped.
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Temperature Chart Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Inner and Setpoint Temperature</h5>
+            <canvas id="temperatureChartInstep" style="height: 300px; max-height: 300px;"></canvas>
+          </div>
+        </div>
+        <!-- Temperature In - Out Chart Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Inner and Outer Temperature</h5>
+            <canvas id="temperatureInOutChartInstep" style="height: 300px; max-height: 300px;"></canvas>
+          </div>
+        </div>
+        <!-- Humidity Chart Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Inner Humidity</h5>
+            <canvas id="humidityChartInstep" style="height: 300px; max-height: 300px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/main.js"></script>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/chart.min.js"></script>
+  <script>
+    function updateValues(data) {
+      document.getElementById('temp_in_3').innerText = data.temp_in_3.toFixed(2);
+      document.getElementById('temp_out_3').innerText = data.temp_out_3.toFixed(2);
+      document.getElementById('humidity_in_3').innerText = data.humidity_in_3.toFixed(2);
+      document.getElementById('Setpoint_3').innerText = data.setpoint_3.toFixed(2);
+      document.getElementById('Timer_3').innerText = data.minute_3;
+      document.getElementById('heater_3').innerText = data.heater_3.toFixed(2);
+      document.getElementById('minute_3').innerText = data.minute_3;
+      document.getElementById('second_3').innerText = data.second_3;
+      if (data.minute_3 === 0 && data.second_3 === 1) {
+        $('#timerModal').modal('show');
+        heaterStatus_3 = false;
+      }
+
+      if (!heaterStatus_3) {
+        document.getElementById('heaterStatus_3').innerText = 'Stopped';
+        document.getElementById('heaterStatus_3').style.color = 'red';
+      } else {
+        document.getElementById('heaterStatus_3').innerText = 'Started';
+        document.getElementById('heaterStatus_3').style.color = 'green';
+      }
+    }
+    
+    // Connect to WebSocket
+    var ws = new WebSocket('ws://' + window.location.hostname + ':81/');
+    ws.onmessage = function(event) {
+      var data = JSON.parse(event.data);
+      updateValues(data);
+    };
+	
+    function updateData() {
+      fetch('/data')
+        .then(response => response.json())
+        .then(data => {
+          updatetemperatureChartInstep(data);
+          updatetemperatureInOutChartInstep(data);
+          updatehumidityChartInstep(data);
+        });
+    }
+    setInterval(updateData, 5000);
+    
+    function updateSetpointValue(setpoint_3) {
+      document.getElementById('setpointInput_3').value = setpoint_3.toFixed(2);
+    }
+
+    document.getElementById('setpointForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var setpoint_3 = parseFloat(document.getElementById('setpointInput_3').value);
+      if (!isNaN(setpoint_3)) {
+        updateSetpoint(setpoint_3);
+      } else {
+        alert('Invalid Setpoint value');
+      }
+    });
+
+    function updateSetpoint(setpoint_3) {
+      var formData = new FormData();
+      formData.append('setpoint_3', setpoint_3);
+      fetch('/setpoint_3', {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(message) {
+        console.log(message);
+        updateSetpointValue(setpoint_3);
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
+    }
+
+    function updateTimerValue(minute_3) {
+      document.getElementById('timerInput_3').value = minute_3;
+    }
+
+    document.getElementById('timerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var minute_3 = parseFloat(document.getElementById('timerInput_3').value);
+      if (!isNaN(minute_3)) {
+        updateTimer(minute_3);
+      } else {
+        alert('Invalid Timer value');
+      }
+    });
+
+    function updateTimer(minute_3) {
+      var formData = new FormData();
+      formData.append('minute_3', minute_3);
+      fetch('/minute_3', {
+        method: 'POST',
+        body: formData
+      })
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(message) {
+        console.log(message);
+        updateTimerValue(minute_3);
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
+    }
+
+    var ctxTemperature = document.getElementById('temperatureChartInstep').getContext('2d');
+    var dataTemperature = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Inner Temperature (°C)',
+          borderColor: 'rgb(100, 221, 23)',
+          data: [],
+          fill: false
+        },
+        {
+          label: 'Setpoint (°C)',
+          borderColor: 'rgb(198, 40, 40)',
+          data: [],
+          fill: false
+        }
+      ]
+    };
+    var optionsTemperature = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Time'
+          },
+          ticks: {
+            maxTicksLimit: 20
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Temperature (°C)'
+          },
+          suggestedMin: 15,
+          suggestedMax: 40
+        }
+      }
+    };
+    var temperatureChartInstep = new Chart(ctxTemperature, {
+      type: 'line',
+      data: dataTemperature,
+      options: optionsTemperature
+    });
+
+    function updatetemperatureChartInstep(data) {
+      var time = new Date().toLocaleTimeString();
+      temperatureChartInstep.data.labels.push(time);
+      temperatureChartInstep.data.datasets[0].data.push(data.temp_in_3.toFixed(2));
+      temperatureChartInstep.data.datasets[1].data.push(data.setpoint_3.toFixed(2));
+      
+      // Limit the chart data length to prevent it from becoming too long
+      if (temperatureChartInstep.data.labels.length > 20) {
+        temperatureChartInstep.data.labels.shift();
+        temperatureChartInstep.data.datasets[0].data.shift();
+        temperatureChartInstep.data.datasets[1].data.shift();
+      }
+      
+      // Update the chart
+      temperatureChartInstep.update();
+
+      // Store the chart data in Local Storage
+      localStorage.setItem('temperatureChartInstepLabels', JSON.stringify(temperatureChartInstep.data.labels));
+      localStorage.setItem('temperatureChartInstepData1', JSON.stringify(temperatureChartInstep.data.datasets[0].data));
+      localStorage.setItem('temperatureChartInstepData2', JSON.stringify(temperatureChartInstep.data.datasets[1].data));
+    }
+
+    // Load the stored chart data from Local Storage when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      var storedLabels = localStorage.getItem('temperatureChartInstepLabels');
+      var storedData1 = localStorage.getItem('temperatureChartInstepData1');
+      var storedData2 = localStorage.getItem('temperatureChartInstepData2');
+      
+      if (storedLabels && storedData1 && storedData2) {
+        temperatureChartInstep.data.labels = JSON.parse(storedLabels);
+        temperatureChartInstep.data.datasets[0].data = JSON.parse(storedData1);
+        temperatureChartInstep.data.datasets[1].data = JSON.parse(storedData2);
+        
+        temperatureChartInstep.update();
+      }
+    });
+
+    var ctxTemperatureInOut = document.getElementById('temperatureInOutChartInstep').getContext('2d');
+    var dataTemperatureInOut = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Inner Temperature (°C)',
+          borderColor: 'rgb(100, 221, 23)',
+          data: [],
+          fill: false
+        },
+        {
+          label: 'Outer Temperature (°C)',
+          borderColor: 'rgb(255, 234, 0)',
+          data: [],
+          fill: false
+        }
+      ]
+    };
+    var optionsTemperatureInOut = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Time'
+          },
+          ticks: {
+            maxTicksLimit: 20
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Temperature (°C)'
+          },
+          suggestedMin: 15,
+          suggestedMax: 40
+        }
+      }
+    };
+    var temperatureInOutChartInstep = new Chart(ctxTemperatureInOut, {
+      type: 'line',
+      data: dataTemperatureInOut,
+      options: optionsTemperatureInOut
+    });
+
+    function updatetemperatureInOutChartInstep(data) {
+      var time = new Date().toLocaleTimeString();
+      temperatureInOutChartInstep.data.labels.push(time);
+      temperatureInOutChartInstep.data.datasets[0].data.push(data.temp_in_3.toFixed(2));
+      temperatureInOutChartInstep.data.datasets[1].data.push(data.temp_out_3.toFixed(2));
+      
+      // Limit the chart data length to prevent it from becoming too long
+      if (temperatureInOutChartInstep.data.labels.length > 20) {
+        temperatureInOutChartInstep.data.labels.shift();
+        temperatureInOutChartInstep.data.datasets[0].data.shift();
+        temperatureInOutChartInstep.data.datasets[1].data.shift();
+      }
+      
+      // Update the chart
+      temperatureInOutChartInstep.update();
+
+      // Store the chart data in Local Storage
+      localStorage.setItem('temperatureInOutChartInstepLabels', JSON.stringify(temperatureInOutChartInstep.data.labels));
+      localStorage.setItem('temperatureInOutChartInstepData1', JSON.stringify(temperatureInOutChartInstep.data.datasets[0].data));
+      localStorage.setItem('temperatureInOutChartInstepData2', JSON.stringify(temperatureInOutChartInstep.data.datasets[1].data));
+    }
+
+    // Load the stored chart data from Local Storage when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      var storedLabels = localStorage.getItem('temperatureInOutChartInstepLabels');
+      var storedData1 = localStorage.getItem('temperatureInOutChartInstepData1');
+      var storedData2 = localStorage.getItem('temperatureInOutChartInstepData2');
+      
+      if (storedLabels && storedData1 && storedData2) {
+        temperatureInOutChartInstep.data.labels = JSON.parse(storedLabels);
+        temperatureInOutChartInstep.data.datasets[0].data = JSON.parse(storedData1);
+        temperatureInOutChartInstep.data.datasets[1].data = JSON.parse(storedData2);
+        
+        temperatureInOutChartInstep.update();
+      }
+    });
+
+    var ctxHumidity = document.getElementById('humidityChartInstep').getContext('2d');
+    var dataHumidity = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Inner Humidity (%)',
+          borderColor: 'rgb(2, 136, 209)',
+          data: [],
+          fill: false
+        }
+      ]
+    };
+    var optionsHumidity = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Time'
+          },
+          ticks: {
+            maxTicksLimit: 20
+          }
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Humidity (%)'
+          },
+          suggestedMin: 0,
+          suggestedMax: 100
+        }
+      }
+    };
+    var humidityChartInstep = new Chart(ctxHumidity, {
+      type: 'line',
+      data: dataHumidity,
+      options: optionsHumidity
+    });
+
+    function updatehumidityChartInstep(data) {
+      var time = new Date().toLocaleTimeString();
+      humidityChartInstep.data.labels.push(time);
+      humidityChartInstep.data.datasets[0].data.push(data.humidity_in_3.toFixed(2));
+      
+      // Limit the chart data length to prevent it from becoming too long
+      if (humidityChartInstep.data.labels.length > 20) {
+        humidityChartInstep.data.labels.shift();
+        humidityChartInstep.data.datasets[0].data.shift();
+      }
+      
+      // Update the chart
+      humidityChartInstep.update();
+
+      // Store the chart data in Local Storage
+      localStorage.setItem('humidityChartInstepLabels', JSON.stringify(humidityChartInstep.data.labels));
+      localStorage.setItem('humidityChartInstepData', JSON.stringify(humidityChartInstep.data.datasets[0].data));
+    }
+
+    // Load the stored chart data from Local Storage when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      var storedLabels = localStorage.getItem('humidityChartInstepLabels');
+      var storedData = localStorage.getItem('humidityChartInstepData');
+      
+      if (storedLabels && storedData) {
+        humidityChartInstep.data.labels = JSON.parse(storedLabels);
+        humidityChartInstep.data.datasets[0].data = JSON.parse(storedData);
+        
+        humidityChartInstep.update();
+      }
+    });
+
+    // Function to reset all graphs
+    function resetGraphs() {
+      // Clear stored chart data in Local Storage
+      localStorage.removeItem('temperatureChartInstepLabels');
+      localStorage.removeItem('temperatureChartInstepData1');
+      localStorage.removeItem('temperatureChartInstepData2');
+      localStorage.removeItem('temperatureInOutChartInstepLabels');
+      localStorage.removeItem('temperatureInOutChartInstepData1');
+      localStorage.removeItem('temperatureInOutChartInstepData2');
+      localStorage.removeItem('humidityChartInstepLabels');
+      localStorage.removeItem('humidityChartInstepData');
+
+      // Clear the data arrays in the charts
+      temperatureChartInstep.data.labels = [];
+      temperatureChartInstep.data.datasets[0].data = [];
+      temperatureChartInstep.data.datasets[1].data = [];
+      temperatureChartInstep.update();
+
+      temperatureInOutChartInstep.data.labels = [];
+      temperatureInOutChartInstep.data.datasets[0].data = [];
+      temperatureInOutChartInstep.data.datasets[1].data = [];
+      temperatureInOutChartInstep.update();
+
+      humidityChartInstep.data.labels = [];
+      humidityChartInstep.data.datasets[0].data = [];
+      humidityChartInstep.update();
+    }
+
+    let heaterStatus_3 = false;
+
+    function startHeater_3() {
+      if (heaterStatus_3) {
+        console.log("Heater is already started.");
+        return;
+      }
+      
+      var minute_3 = parseFloat(document.getElementById('timerInput_3').value);
+      
+      if (!isNaN(minute_3) && minute_3 >= 0) {
+        fetch('/start-heater_3', { method: 'POST' })
+          .then(response => response.text())
+          .then(message => {
+            console.log(message);
+            heaterStatus_3 = true;
+          });
+      } else {
+        alert('Please enter a valid timer value greater than 0.');
+      }
+    }
+
+    function stopHeater_3() {
+      fetch('/stop-heater_3', { method: 'POST' })
+        .then(response => response.text())
+        .then(message => {
+          console.log(message);
+          heaterStatus_3 = false;
+          resetGraphs();
+        });
+    }
+  </script>
+</body>
+</html>
+
