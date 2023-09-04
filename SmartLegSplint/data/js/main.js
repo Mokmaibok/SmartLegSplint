@@ -27,7 +27,8 @@ const channel = [
     'start_heater_2',
     'start_heater_3'
 ];
-const apiUrl = "https://api.anto.io/channel/get/" + apiKey + "/" + thing + "/";
+const apiUrl_get = "https://api.anto.io/channel/get/" + apiKey + "/" + thing + "/";
+const apiUrl_set = "https://api.anto.io/channel/set/" + apiKey + "/" + thing + "/";
 
 // ดึงข้อมูลจาก API และแสดงผล
 function fetchData(apiUrl, channel) {
@@ -47,6 +48,42 @@ function fetchData(apiUrl, channel) {
 // อัพเดตข้อมูลทุก 1 วินาที
 setInterval(() => {
     for (let i = 0; i < channel.length; i++) {
-        fetchData(apiUrl + channel[i], channel[i]);
+        fetchData(apiUrl_get + channel[i], channel[i]);
     }
 }, 1000);
+
+// ส่งคำสั่งเปิด/ปิดเครื่องทำความร้อน
+function sendHeaterCommand(heaterNumber, command) {
+    const url = `${apiUrl_set}start_heater_${heaterNumber}/${command}`;
+    fetch(url)
+        .then(response => response.text())
+        .then(message => console.log(message))
+        .catch(error => console.error('Error:', error));
+}
+
+// ตัวอย่างการเรียกใช้ฟังก์ชันสำหรับเครื่องทำความร้อนที่ 1
+function startHeater_1() {
+    sendHeaterCommand(1, "1");
+}
+
+function stopHeater_1() {
+    sendHeaterCommand(1, "0");
+}
+
+// ตัวอย่างการเรียกใช้ฟังก์ชันสำหรับเครื่องทำความร้อนที่ 2
+function startHeater_2() {
+    sendHeaterCommand(2, "1");
+}
+
+function stopHeater_2() {
+    sendHeaterCommand(2, "0");
+}
+
+// ตัวอย่างการเรียกใช้ฟังก์ชันสำหรับเครื่องทำความร้อนที่ 3
+function startHeater_3() {
+    sendHeaterCommand(3, "1");
+}
+
+function stopHeater_3() {
+    sendHeaterCommand(3, "0");
+}

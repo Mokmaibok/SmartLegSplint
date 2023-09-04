@@ -131,7 +131,7 @@
                 <h5 class="card-title">Countdown Timer</h5>
                 <p>Time Remaining: <span id="minute_1">-</span> Minute <span id="second_1">-</span> Second</p>
                 <!-- Timer Modal -->
-                <div class="modal fade" id="timerModal" tabindex="-1" aria-labelledby="timerModalLabel" aria-hidden="true">
+                <div class="modal fade" id="timerModal_1" tabindex="-1" aria-labelledby="timerModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -199,7 +199,7 @@
     function updateSetpoint(setpoint_1) {
       var formData = new FormData();
       formData.append('setpoint_1', setpoint_1);
-      fetch(apiUrl + "setpoint_1", {
+      fetch(apiUrl_get + 'setpoint_1', {
         method: 'POST',
         body: formData
       })
@@ -208,7 +208,7 @@
       })
       .then(function(message) {
         console.log(message);
-        updateSetpointValue(setpoint_1);
+        updateTimerValue(setpoint_1);
       })
       .catch(function(error) {
         console.error('Error:', error);

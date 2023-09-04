@@ -120,6 +120,11 @@ void setupWiFiandAnto() {
   anto.begin(ssid, password, messageReceived);
 
   Serial.println("Connected to Anto");
+
+  anto.sub("start_heater_1");
+  anto.sub("start_heater_2");
+  anto.sub("start_heater_3");
+  
 }
 
 // ฟังก์ชันในการรับข้อมูลที่ถูกส่งมาจาก Anto MQTT
@@ -130,35 +135,64 @@ void messageReceived(String thing, String channel, String payload) {
   Serial.print(channel);
   Serial.print("-> ");
   Serial.println(payload);
+
+  // ตรวจสอบว่ารับข้อมูลจากช่องที่เราสนใจหรือไม่
+  if (thing == "Smart_Leg_Splint") {
+    if (channel == "start_heater_1") {
+      // ถ้ารับค่า "1" ให้เปิดเครื่องทำความร้อนที่ตำแหน่ง 1
+      if (payload == "1") {
+        heaterStatus[0] = true;
+      } else {
+        heaterStatus[0] = false;
+      }
+    } else if (channel == "start_heater_2") {
+      // ถ้ารับค่า "1" ให้เปิดเครื่องทำความร้อนที่ตำแหน่ง 2
+      if (payload == "1") {
+        heaterStatus[1] = true;
+      } else {
+        heaterStatus[1] = false;
+      }
+    } else if (channel == "start_heater_3") {
+      // ถ้ารับค่า "1" ให้เปิดเครื่องทำความร้อนที่ตำแหน่ง 3
+      if (payload == "1") {
+        heaterStatus[2] = true;
+      } else {
+        heaterStatus[2] = false;
+      }
+    }
+  }
 }
+
 
 // ฟังก์ชันอัพเดตค่าจาก DHT เซ็นเซอร์และส่งข้อมูลไปยัง Anto
 void updateDHTDataAndSendToAnto() {
   // อ่านค่าอุณหภูมิและความชื้นจากเซ็นเซอร์ DHT11
-  float temp_in_[3];
-  float humid_in_[3];
+  float temp_in[3];
+  float humid_in[3];
   float temp_out;
   
-  temp_in_[0] = dht_in[0].readTemperature();
-  temp_in_[1] = dht_in[1].readTemperature();
-  temp_in_[2] = dht_in[2].readTemperature();
+  temp_in[0] = dht_in[0].readTemperature();
+  temp_in[1] = dht_in[1].readTemperature();
+  temp_in[2] = dht_in[2].readTemperature();
   
-  humid_in_[0] = dht_in[0].readHumidity();
-  humid_in_[1] = dht_in[1].readHumidity();
-  humid_in_[2] = dht_in[2].readHumidity();
+  humid_in[0] = dht_in[0].readHumidity();
+  humid_in[1] = dht_in[1].readHumidity();
+  humid_in[2] = dht_in[2].readHumidity();
   
   temp_out = dht_out.readTemperature();
   
   // ส่งค่าอุณหภูมิและความชื้นไปยัง Anto MQTT
-  anto.pub("temp_in_1", temp_in_[0]);
-  anto.pub("temp_in_2", temp_in_[1]);
-  anto.pub("temp_in_3", temp_in_[2]);
+  anto.pub("temp_in_1", temp_in[0]);
+  anto.pub("temp_in_2", temp_in[1]);
+  anto.pub("temp_in_3", temp_in[2]);
   
   anto.pub("humidity_in_1", humid_in[0]);
   anto.pub("humidity_in_2", humid_in[1]);
   anto.pub("humidity_in_3", humid_in[2]);
   
-  anto.pub("temp_out", temp_out);
+  anto.pub("temp_out_1", temp_out);
+  anto.pub("temp_out_2", temp_out);
+  anto.pub("temp_out_3", temp_out);
   
   // ส่งค่าเปอร์เซ็นต์ของเครื่องทำความร้อนไปยัง Anto MQTT
   anto.pub("heater_1", heater[0]);
