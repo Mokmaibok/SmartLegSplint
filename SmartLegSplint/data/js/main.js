@@ -44,7 +44,6 @@ function fetchData(apiUrl, channel) {
         });
 }
 
-
 // อัพเดตข้อมูลทุก 1 วินาที
 setInterval(() => {
     for (let i = 0; i < channel.length; i++) {
