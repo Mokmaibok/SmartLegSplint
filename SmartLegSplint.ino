@@ -169,21 +169,30 @@ void updateDHTDataAndSendToAnto() {
   anto.pub("setpoint_1", setpoints[0]);
   anto.pub("setpoint_2", setpoints[1]);
   anto.pub("setpoint_3", setpoints[2]);
+  
+  // ส่งค่านาทีและวินาทีไปยัง Anto MQTT
+  anto.pub("minute_1", minute[0]);
+  anto.pub("minute_2", minute[1]);
+  anto.pub("minute_3", minute[2]);
+  
+  anto.pub("second_1", second[0]);
+  anto.pub("second_2", second[1]);
+  anto.pub("second_3", second[2]);
 }
 
 // ฟังก์ชันในการควบคุมการทำงานของเครื่องทำความร้อน
 void controlHeaters() {
   for (int i = 0; i < 3; i++) {
     // อ่านอุณหภูมิจากเซนเซอร์ DHT เข้ามา
-    float temperature_in = dht_in[i].readTemperature();
+    float temp_in = dht_in[i].readTemperature();
     // กำหนดค่าเป้าหมายสำหรับ PID
     pid[i].setpoint(setpoints[i]);
     // ควบคุมการผลิตความร้อน
     if (heaterStatus[i]) {
-      pwmOutput[i] = pid[i].compute(temperature_in);
+      pwmOutput[i] = pid[i].compute(temp_in);
       analogWrite(heaterOutputPin[i], pwmOutput[i]);
       // ตรวจสอบเงื่อนไขเวลา
-      if (temperature_in >= setpoints[i]) {
+      if (temp_in >= setpoints[i]) {
         checkSetpoints[i] = true;
       }
       if (checkSetpoints[i]) {

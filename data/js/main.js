@@ -12,6 +12,12 @@ const api_heater_3 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix4
 const api_setpoint_1 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/setpoint_1';
 const api_setpoint_2 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/setpoint_2';
 const api_setpoint_3 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/setpoint_3';
+const api_minute_1 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/minute_1';
+const api_minute_2 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/minute_2';
+const api_minute_3 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/minute_3';
+const api_second_1 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/second_1';
+const api_second_2 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/second_2';
+const api_second_3 = 'https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/second_3';
 
 // ดึงข้อมูลจาก API และแสดงผล
 function fetchData(apiUrl, elementId) {
@@ -42,4 +48,10 @@ setInterval(() => {
     fetchData(api_setpoint_1, 'setpoint_1');
     fetchData(api_setpoint_2, 'setpoint_2');
     fetchData(api_setpoint_3, 'setpoint_3');
+    fetchData(api_minute_1, 'minute_1');
+    fetchData(api_minute_2, 'minute_2');
+    fetchData(api_minute_3, 'minute_3');
+    fetchData(api_second_1, 'second_1');
+    fetchData(api_second_2, 'second_2');
+    fetchData(api_second_3, 'second_3');
 }, 1000);
