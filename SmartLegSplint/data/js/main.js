@@ -23,9 +23,9 @@ const channel = [
     'second_1',
     'second_2',
     'second_3',
-    'start_heater_1',
-    'start_heater_2',
-    'start_heater_3'
+    'timer_1',
+    'timer_2',
+    'timer_3'
 ];
 const apiUrl_get = "https://api.anto.io/channel/get/" + apiKey + "/" + thing + "/";
 const apiUrl_set = "https://api.anto.io/channel/set/" + apiKey + "/" + thing + "/";
@@ -56,7 +56,7 @@ setInterval(() => {
 function sendHeaterCommand(heaterNumber, command) {
     const url = `${apiUrl_set}start_heater_${heaterNumber}/${command}`;
     fetch(url)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(message => console.log(message))
         .catch(error => console.error('Error:', error));
 }

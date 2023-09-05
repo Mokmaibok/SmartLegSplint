@@ -163,7 +163,6 @@ void messageReceived(String thing, String channel, String payload) {
   }
 }
 
-
 // ฟังก์ชันอัพเดตค่าจาก DHT เซ็นเซอร์และส่งข้อมูลไปยัง Anto
 void updateDHTDataAndSendToAnto() {
   // อ่านค่าอุณหภูมิและความชื้นจากเซ็นเซอร์ DHT11
@@ -212,6 +211,10 @@ void updateDHTDataAndSendToAnto() {
   anto.pub("second_1", second[0]);
   anto.pub("second_2", second[1]);
   anto.pub("second_3", second[2]);
+
+  anto.pub("timer_1", minute[0]);
+  anto.pub("timer_2", minute[1]);
+  anto.pub("timer_3", minute[2]);
 }
 
 // ฟังก์ชันในการควบคุมการทำงานของเครื่องทำความร้อน
@@ -298,7 +301,6 @@ void setupRoutes() {
 void handleRoot() {
   handleFile("/index.html");
 }
-
 
 // ฟังก์ชันในการให้ Content Type ของไฟล์
 String getContentType(const String &fileName) {

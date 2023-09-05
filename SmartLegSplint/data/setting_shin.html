@@ -50,7 +50,7 @@
             <h5 class="card-title">Setpoint</h5>
             <form id="setpointForm">
               <div class="form-group">
-                <p class="card-text">Current Setpoint: <span id="Setpoint_1">-</span> °C</p>
+                <p class="card-text">Current Setpoint: <span id="setpoint_1">-</span> °C</p>
                 <input type="number" step="0.1" class="form-control" id="setpointInput_1" placeholder="Enter Setpoint">
               </div>
               <button type="submit" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Update Setpoint</button>
@@ -63,7 +63,7 @@
             <h5 class="card-title">Set Timer</h5>
             <form id="timerForm">
               <div class="form-group">
-                <p class="card-text">Current Timer: <span id="Timer_1">-</span> Minute</p>
+                <p class="card-text">Current Timer: <span id="timer_1">-</span> Minute</p>
                 <input type="number" step="0.1" class="form-control" id="timerInput_1" placeholder="Enter Minute">
               </div>
               <button type="submit" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Set Timer</button>
@@ -182,72 +182,6 @@
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="./js/chart.min.js"></script>
   <script>
-    function updateSetpointValue(setpoint_1) {
-      document.getElementById('setpointInput_1').value = setpoint_1.toFixed(2);
-    }
-  
-    document.getElementById('setpointForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var setpoint_1 = parseFloat(document.getElementById('setpointInput_1').value);
-      if (!isNaN(setpoint_1)) {
-        updateSetpoint(setpoint_1);
-      } else {
-        alert('Invalid Setpoint value');
-      }
-    });
-
-    function updateSetpoint(setpoint_1) {
-      var formData = new FormData();
-      formData.append('setpoint_1', setpoint_1);
-      fetch(apiUrl_get + 'setpoint_1', {
-        method: 'POST',
-        body: formData
-      })
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(message) {
-        console.log(message);
-        updateTimerValue(setpoint_1);
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-      });
-    }
-
-    function updateTimerValue(minute_1) {
-      document.getElementById('timerInput_1').value = minute_1;
-    }
-  
-    document.getElementById('timerForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var minute_1 = parseFloat(document.getElementById('timerInput_1').value);
-      if (!isNaN(minute_1)) {
-        updateTimer(minute_1);
-      } else {
-        alert('Invalid Timer value');
-      }
-    });
-
-    function updateTimer(minute_1) {
-      var formData = new FormData();
-      formData.append('minute_1', minute_1);
-      fetch('/minute_1', {
-        method: 'POST',
-        body: formData
-      })
-      .then(function(response) {
-        return response.text();
-      })
-      .then(function(message) {
-        console.log(message);
-        updateTimerValue(minute_1);
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-      });
-    }
-
     var ctxTemperature = document.getElementById('temperatureChartShin').getContext('2d');
     var dataTemperature = {
       labels: [],
