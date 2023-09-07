@@ -87,3 +87,8 @@ function startHeater_3() {
 function stopHeater_3() {
     sendHeaterCommand(3, "0");
 }
+
+fetch('https://api.anto.io/channel/get/KKLdLloWwarKm1bsNgFAmwJix49eCoPbJ14ywF3H/Smart_Leg_Splint/start_heater_1')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
